@@ -1,0 +1,19 @@
+[
+ "js/images.js",
+ "js/core/data.js",
+ "js/core/audio.js",
+ "js/core/views.js",
+ "js/games/drawing.js",
+ "js/core/mic-levels-dictionary.js",
+ "js/games/parrot-teaches.js",
+ "js/games/blow.js",
+ "js/games/talk.js",
+ "js/games/listen-imitate.js",
+ "js/core/timer.js",
+ "js/core/layout.js",
+ "js/games/pictures.js",
+ "js/games/rhythm.js",
+ "js/games/count.js",
+ "js/games/colour-mat.js",
+ "js/main.js"
+]
