@@ -1,0 +1,494 @@
+{
+ "🐱": {
+  "file": "assets/img/koshka.webp"
+ },
+ "🐶": {
+  "file": "assets/img/sobaka.webp"
+ },
+ "🐮": {
+  "file": "assets/img/korova.webp"
+ },
+ "🦆": {
+  "file": "assets/img/utka.webp"
+ },
+ "🐷": {
+  "file": "assets/img/svinka.webp"
+ },
+ "🐸": {
+  "file": "assets/img/lyagushka.webp"
+ },
+ "🐓": {
+  "file": "assets/img/u1f413.webp"
+ },
+ "🐑": {
+  "file": "assets/img/ovechka.webp"
+ },
+ "🐴": {
+  "file": "assets/img/loshadka.webp"
+ },
+ "🚗": {
+  "file": "assets/img/mashina.webp"
+ },
+ "🚌": {
+  "file": "assets/img/avtobus.webp"
+ },
+ "🚂": {
+  "file": "assets/img/poezd.webp"
+ },
+ "✈": {
+  "file": "assets/img/samolyot.webp"
+ },
+ "🚒": {
+  "file": "assets/img/pozharnaya-mashina.webp"
+ },
+ "🚁": {
+  "file": "assets/img/vertolyot.webp"
+ },
+ "🚲": {
+  "file": "assets/img/velosiped.webp"
+ },
+ "🚢": {
+  "file": "assets/img/korabl.webp"
+ },
+ "🚜": {
+  "file": "assets/img/traktor.webp"
+ },
+ "🍎": {
+  "file": "assets/img/yabloko.webp"
+ },
+ "🍌": {
+  "file": "assets/img/banan.webp"
+ },
+ "🥕": {
+  "file": "assets/img/morkov.webp"
+ },
+ "🥛": {
+  "file": "assets/img/moloko.webp"
+ },
+ "🍪": {
+  "file": "assets/img/pechene.webp"
+ },
+ "🍉": {
+  "file": "assets/img/arbuz.webp"
+ },
+ "🍞": {
+  "file": "assets/img/hleb.webp"
+ },
+ "🧀": {
+  "file": "assets/img/syr.webp"
+ },
+ "🍓": {
+  "file": "assets/img/klubnika.webp"
+ },
+ "👃": {
+  "file": "assets/img/nos.webp"
+ },
+ "👁": {
+  "file": "assets/img/glaz.webp"
+ },
+ "👂": {
+  "file": "assets/img/uho.webp"
+ },
+ "👄": {
+  "file": "assets/img/rot.webp"
+ },
+ "✋": {
+  "file": "assets/img/ruka.webp"
+ },
+ "🦶": {
+  "file": "assets/img/u1f9b6.webp"
+ },
+ "🦷": {
+  "file": "assets/img/zuby.webp"
+ },
+ "☝": {
+  "file": "assets/img/palets.webp"
+ },
+ "🐰": {
+  "file": "assets/img/krolik.webp"
+ },
+ "🧸": {
+  "file": "assets/img/mishka.webp"
+ },
+ "🐟": {
+  "file": "assets/img/ryba.webp"
+ },
+ "⚽": {
+  "file": "assets/img/myach.webp"
+ },
+ "🦋": {
+  "file": "assets/img/babochka.webp"
+ },
+ "🐻": {
+  "file": "assets/img/u1f43b.webp"
+ },
+ "👆": {
+  "file": "assets/img/igra-nazhimay-i-slushay.webp"
+ },
+ "🔍": {
+  "file": "assets/img/igra-naydi-kartinku.webp"
+ },
+ "🥁": {
+  "file": "assets/img/baraban.webp"
+ },
+ "✏": {
+  "file": "assets/img/igra-risuem-paltsem.webp"
+ },
+ "🔢": {
+  "file": "assets/img/igra-schitaem.webp"
+ },
+ "🟥": {
+  "file": "assets/img/igra-tsvetnoy-kovrik.webp"
+ },
+ "🟦": {
+  "file": "assets/img/u1f7e6.webp"
+ },
+ "☁": {
+  "file": "assets/img/oblako.webp"
+ },
+ "🏠": {
+  "file": "assets/img/dorozhka.webp"
+ },
+ "🐍": {
+  "file": "assets/img/zmeyka.webp"
+ },
+ "🌧": {
+  "file": "assets/img/dozhd.webp"
+ },
+ "☀": {
+  "file": "assets/img/solntse.webp"
+ },
+ "🌱": {
+  "file": "assets/img/travka.webp"
+ },
+ "🎉": {
+  "file": "assets/img/u1f389.webp"
+ },
+ "🎈": {
+  "file": "assets/img/sharik.webp"
+ },
+ "⭐": {
+  "file": "assets/img/zvezda.webp"
+ },
+ "✨": {
+  "file": "assets/img/u2728.webp"
+ },
+ "🌟": {
+  "file": "assets/img/u1f31f.webp"
+ },
+ "🎊": {
+  "file": "assets/img/u1f38a.webp"
+ },
+ "🔊": {
+  "file": "assets/img/u1f50a.webp"
+ },
+ "🔄": {
+  "file": "assets/img/u1f504.webp"
+ },
+ "🧽": {
+  "file": "assets/img/u1f9fd.webp"
+ },
+ "➡": {
+  "file": "assets/img/u27a1.webp"
+ },
+ "📷": {
+  "file": "assets/img/u1f4f7.webp"
+ },
+ "🎙": {
+  "file": "assets/img/u1f399.webp"
+ },
+ "🐥": {
+  "file": "assets/img/tsyplyonok.webp"
+ },
+ "🦵": {
+  "file": "assets/img/noga.webp"
+ },
+ "👣": {
+  "file": "assets/img/u1f463.webp"
+ },
+ "💃": {
+  "file": "assets/img/u1f483.webp"
+ },
+ "👏": {
+  "file": "assets/img/u1f44f.webp"
+ },
+ "🌀": {
+  "file": "assets/img/u1f300.webp"
+ },
+ "❄": {
+  "file": "assets/img/snezhinka.webp"
+ },
+ "🎨": {
+  "file": "assets/img/igra-volshebnaya-kist.webp"
+ },
+ "🫧": {
+  "file": "assets/img/igra-sotri-i-naydi.webp"
+ },
+ "⏸": {
+  "file": "assets/img/u23f8.webp"
+ },
+ "▶": {
+  "file": "assets/img/u25b6.webp"
+ },
+ "🎶": {
+  "file": "assets/img/u1f3b6.webp"
+ },
+ "🖍": {
+  "file": "assets/img/igra-raskraska.webp"
+ },
+ "🙌": {
+  "file": "assets/img/igra-sdelay-kak-ya.webp"
+ },
+ "🍽": {
+  "file": "assets/img/tarelka.webp"
+ },
+ "🛁": {
+  "file": "assets/img/kupatsya.webp"
+ },
+ "🌳": {
+  "file": "assets/img/derevo.webp"
+ },
+ "😴": {
+  "file": "assets/img/spat.webp"
+ },
+ "📚": {
+  "file": "assets/img/chitat-knizhku.webp"
+ },
+ "🌸": {
+  "file": "assets/img/tsvetok.webp"
+ },
+ "🐞": {
+  "file": "assets/img/bozhya-korovka.webp"
+ },
+ "🦜": {
+  "file": "assets/img/igra-popugay-uchit.webp"
+ },
+ "🗣": {
+  "file": "assets/img/igra-govorim.webp"
+ },
+ "🎤": {
+  "file": "assets/img/u1f3a4.webp"
+ },
+ "💬": {
+  "file": "assets/img/frazy-igry.webp"
+ },
+ "🐕": {
+  "file": "assets/img/sobaka.webp"
+ },
+ "🐇": {
+  "file": "assets/img/krolik.webp"
+ },
+ "🐦": {
+  "file": "assets/img/ptichka.webp"
+ },
+ "💤": {
+  "file": "assets/img/u1f4a4.webp"
+ },
+ "🌼": {
+  "file": "assets/img/igra-poduy.webp"
+ },
+ "⛵": {
+  "file": "assets/img/u26f5.webp"
+ },
+ "🏝": {
+  "file": "assets/img/u1f3dd.webp"
+ },
+ "🦔": {
+  "file": "assets/img/yozhik.webp"
+ },
+ "🦴": {
+  "file": "assets/img/u1f9b4.webp"
+ },
+ "🍯": {
+  "file": "assets/img/predmet-myod.webp"
+ },
+ "🌙": {
+  "file": "assets/img/luna.webp"
+ },
+ "👋": {
+  "file": "assets/img/u1f44b.webp"
+ },
+ "👕": {
+  "file": "assets/img/futbolka.webp"
+ },
+ "👖": {
+  "file": "assets/img/bryuki.webp"
+ },
+ "👗": {
+  "file": "assets/img/platye.webp"
+ },
+ "🧢": {
+  "file": "assets/img/kepka.webp"
+ },
+ "🧦": {
+  "file": "assets/img/noski.webp"
+ },
+ "👟": {
+  "file": "assets/img/krossovki.webp"
+ },
+ "🧥": {
+  "file": "assets/img/kurtka.webp"
+ },
+ "🧤": {
+  "file": "assets/img/varezhki.webp"
+ },
+ "🧣": {
+  "file": "assets/img/sharf.webp"
+ },
+ "☕": {
+  "file": "assets/img/kruzhka.webp"
+ },
+ "🥄": {
+  "file": "assets/img/lozhka.webp"
+ },
+ "🍴": {
+  "file": "assets/img/vilka.webp"
+ },
+ "🍲": {
+  "file": "assets/img/kastryulya.webp"
+ },
+ "🍼": {
+  "file": "assets/img/butylochka.webp"
+ },
+ "🫖": {
+  "file": "assets/img/chaynik.webp"
+ },
+ "🥣": {
+  "file": "assets/img/miska.webp"
+ },
+ "🪆": {
+  "file": "assets/img/matryoshka.webp"
+ },
+ "🪁": {
+  "file": "assets/img/vozdushnyy-zmey.webp"
+ },
+ "🍄": {
+  "file": "assets/img/grib.webp"
+ },
+ "🍂": {
+  "file": "assets/img/list.webp"
+ },
+ "🛏": {
+  "file": "assets/img/krovat.webp"
+ },
+ "🪥": {
+  "file": "assets/img/schyotka.webp"
+ },
+ "☎": {
+  "file": "assets/img/telefon.webp"
+ },
+ "🔔": {
+  "file": "assets/img/zvonok.webp"
+ },
+ "⏰": {
+  "file": "assets/img/chasy.webp"
+ },
+ "🐘": {
+  "file": "assets/img/slon.webp"
+ },
+ "🦁": {
+  "file": "assets/img/lev.webp"
+ },
+ "🐔": {
+  "file": "assets/img/kurochka.webp"
+ },
+ "feet": {
+  "file": "assets/img/feet.webp"
+ },
+ "🚚": {
+  "file": "assets/img/gruzovik.webp"
+ },
+ "🛴": {
+  "file": "assets/img/samokat.webp"
+ },
+ "🚕": {
+  "file": "assets/img/taksi.webp"
+ },
+ "🍅": {
+  "file": "assets/img/pomidor.webp"
+ },
+ "🥚": {
+  "file": "assets/img/yaytso.webp"
+ },
+ "🥔": {
+  "file": "assets/img/kartofel.webp"
+ },
+ "🧒": {
+  "file": "assets/img/golova.webp"
+ },
+ "body-zhivot": {
+  "file": "assets/img/zhivot.webp"
+ },
+ "body-spina": {
+  "file": "assets/img/spina.webp"
+ },
+ "body-ladon": {
+  "file": "assets/img/ladon.webp"
+ },
+ "body-stopa": {
+  "file": "assets/img/stopa.webp"
+ },
+ "clothes-sviter": {
+  "file": "assets/img/sviter.webp"
+ },
+ "👢": {
+  "file": "assets/img/sapogi.webp"
+ },
+ "clothes-shapka": {
+  "file": "assets/img/shapka.webp"
+ },
+ "dish-stakan": {
+  "file": "assets/img/stakan.webp"
+ },
+ "dish-nozh": {
+  "file": "assets/img/nozh.webp"
+ },
+ "dish-skovoroda": {
+  "file": "assets/img/skovoroda.webp"
+ },
+ "dish-doska": {
+  "file": "assets/img/doska.webp"
+ },
+ "dish-polovnik": {
+  "file": "assets/img/polovnik.webp"
+ },
+ "toy-mashinka": {
+  "file": "assets/img/mashinka.webp"
+ },
+ "toy-kukla": {
+  "file": "assets/img/kukla.webp"
+ },
+ "toy-konstruktor": {
+  "file": "assets/img/konstruktor.webp"
+ },
+ "toy-poezd": {
+  "file": "assets/img/poezdik.webp"
+ },
+ "toy-piramidka": {
+  "file": "assets/img/piramidka.webp"
+ },
+ "toy-pazl": {
+  "file": "assets/img/pazl.webp"
+ },
+ "toy-karandashi": {
+  "file": "assets/img/karandashi.webp"
+ },
+ "toy-zaychik": {
+  "file": "assets/img/zaychik.webp"
+ },
+ "🌈": {
+  "file": "assets/img/raduga.webp"
+ },
+ "🌿": {
+  "file": "assets/img/trava.webp"
+ },
+ "🪨": {
+  "file": "assets/img/kamen.webp"
+ },
+ "nature-voda": {
+  "file": "assets/img/voda.webp"
+ },
+ "🐝": {
+  "file": "assets/img/pchela.webp"
+ }
+}
