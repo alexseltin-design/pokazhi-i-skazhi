@@ -15,5 +15,8 @@
  "js/games/rhythm.js",
  "js/games/count.js",
  "js/games/colour-mat.js",
+ "js/vendor/qrcode-generator.js",
+ "js/sync-config.js",
+ "js/core/sync.js",
  "js/main.js"
 ]

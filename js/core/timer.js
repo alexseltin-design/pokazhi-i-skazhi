@@ -1,6 +1,6 @@
 /* ---------- play timer and "what comes next" ---------- */
 const NEXT_ACTS={eat:['кушать','🍽️'],bath:['купаться','🛁'],walk:['гулять','🌳'],sleep:['спать','😴'],toys:['играть с игрушками','🧸'],book:['читать книжку','📚']};
-const MENU_MODES=['home','record','family','jumpmenu','drawmenu','talkmenu'];
+const MENU_MODES=['home','record','family','jumpmenu','drawmenu','talkmenu','sync','levels','dict'];
 const sess={end:null,warned:false,iv:null};
 function sessTick(){
   if(!MENU_MODES.includes(state.mode)&&state.sessMin>0&&!sess.end){

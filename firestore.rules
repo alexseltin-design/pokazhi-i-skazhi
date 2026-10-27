@@ -1,0 +1,15 @@
+rules_version = '2';
+// Firestore rules for «Покажи и скажи».
+// Each family's encrypted voice recordings live under /families/{familyId}/recs.
+// familyId is a 32-character hash of the family code, so only someone who knows the code can find it,
+// and the contents are encrypted on the device anyway.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /families/{fid}/recs/{rec} {
+      allow read: if request.auth != null && fid.size() == 32;
+      allow write: if request.auth != null && fid.size() == 32
+                   && request.resource.data.keys().hasOnly(['n','d','m','t','x'])
+                   && request.resource.data.d.size() < 1000000;
+    }
+  }
+}

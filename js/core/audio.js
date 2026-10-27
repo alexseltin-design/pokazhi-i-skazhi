@@ -22,7 +22,8 @@ async function loadRecs(){
   }catch(e){}
   render();
 }
-async function saveRec(key,blob){delete recBuf[key];try{await dbDo('readwrite',st=>st.put(blob,key));}catch(e){}if(recURL[key])URL.revokeObjectURL(recURL[key]);recURL[key]=URL.createObjectURL(blob);}
+async function saveRec(key,blob){delete recBuf[key];try{await dbDo('readwrite',st=>st.put(blob,key));}catch(e){}if(recURL[key])URL.revokeObjectURL(recURL[key]);recURL[key]=URL.createObjectURL(blob);
+  if(typeof syncPush==='function'&&!SYNC.applying)syncPush(key);}
 const famURL={};
 async function loadFamily(){
   let rows=[];
@@ -50,7 +51,8 @@ async function addFamily(){
   loadFamily();
 }
 async function delFamily(it){try{await dbDo('readwrite',st=>st.delete(it.id),'family');}catch(e){}await delRec(it.key);loadFamily();}
-async function delRec(key){delete recBuf[key];try{await dbDo('readwrite',st=>st.delete(key));}catch(e){}if(recURL[key])URL.revokeObjectURL(recURL[key]);delete recURL[key];}
+async function delRec(key){delete recBuf[key];try{await dbDo('readwrite',st=>st.delete(key));}catch(e){}if(recURL[key])URL.revokeObjectURL(recURL[key]);delete recURL[key];
+  if(typeof syncDelete==='function'&&!SYNC.applying)syncDelete(key);}
 
 /* ---------- audio playback ---------- */
 let audio=null,speakToken=0,fallbackTimer=null;
@@ -177,7 +179,7 @@ function speakSeq(parts,onDone){
   clearTimeout(speakTimer);
   if(synth&&(synth.speaking||synth.pending)){synth.cancel();speakTimer=setTimeout(next,80);}else next();
 }
-const say=t=>speakSeq([t]);
+const say=t=>{if(t)speakSeq([t]);};
 function sayItem(it,prefix){
   if(recURL[it.key]){speakSeq(prefix&&recURL['ph:'+prefix]?[prefix,{rec:it.key}]:[{rec:it.key}]);return;}
   const parts=[];

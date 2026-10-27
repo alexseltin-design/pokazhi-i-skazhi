@@ -27,7 +27,7 @@ function startLearn(){
   startMic().then(ok=>{if(state.mode!=='learn')return;if(!ok){lt.noMic=true;}else mic.onFrame=learnFrame;lt.timer=setTimeout(()=>learnModel('ask'),500);});
 }
 function pickLearn(){
-  lt.lvl=lv('learn');const n=learnPool().length;let i;do{i=Math.floor(Math.random()*n);}while(i===lt.last&&n>1);
+  lt.lvl=lv('learn');const n=learnPool().length;const i=bagNext('learn'+lt.lvl,n);
   lt.i=i;lt.last=i;lt.phase='model';lt.on=0;lt.reprompts=0;lt.attempts=0;
 }
 function learnHTML(){

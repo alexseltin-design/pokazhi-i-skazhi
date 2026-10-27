@@ -17,8 +17,8 @@ Object.assign(FX,{
 });
 function startHear(){state.mode='hear';state.stars=0;hr={last:null,timer:null,busy:false};newHear();}
 function newHear(){
-  clearTimeout(hr.timer);const items=hearPool();const pool=items.filter(i=>i!==hr.last);
-  const t=pool[Math.floor(Math.random()*pool.length)];hr.last=t;hr.t=t;
+  clearTimeout(hr.timer);const items=hearPool();
+  const t=items[bagNext('hear'+lv('hear')+state.cat,items.length)];hr.last=t;hr.t=t;
   hr.opts=shuffle([t,...shuffle(items.filter(i=>i!==t)).slice(0,(lv('hear')===1?2:3)-1)]);hr.busy=false;hr.miss=false;
   render();hr.timer=setTimeout(()=>hearSound(['Послушай! Кто это?']),400);
 }
@@ -123,7 +123,7 @@ let cp=null;
 function startCopy(){state.mode='copy';state.stars=0;cp={last:-1,i:0,j:-1,busy:false,timer:null,swap:null,shown:false};newCopy();}
 function newCopy(){
   clearTimeout(cp.timer);clearInterval(cp.swap);cp.lvl=lv('copy');
-  let i;do{i=Math.floor(Math.random()*ACTIONS.length);}while(i===cp.last);
+  let i;i=bagNext('copy',ACTIONS.length);
   let j=-1;if(cp.lvl===3){do{j=Math.floor(Math.random()*ACTIONS.length);}while(j===i);}
   cp.last=i;cp.i=i;cp.j=j;cp.busy=false;cp.shown=cp.lvl!==2;render();startCopyAnim();cp.timer=setTimeout(sayCopy,400);
 }

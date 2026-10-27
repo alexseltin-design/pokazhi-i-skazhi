@@ -57,8 +57,7 @@ function redrawLines(){
     if(P.length===1){g.globalAlpha=P[0][2]?1:.18;g.beginPath();g.arc(P[0][0]*k,P[0][1]*k,2.1*k,0,7);g.fill();continue;}
     for(let i=1;i<P.length;i++){g.globalAlpha=(P[i][2]&&P[i-1][2])?1:.18;g.beginPath();g.moveTo(P[i-1][0]*k,P[i-1][1]*k);g.lineTo(P[i][0]*k,P[i][1]*k);g.stroke();}
   }
-  g.globalAlpha=1;g.fillStyle='#22A45D';
-  for(const p of tr.targets)if(p.hit){g.beginPath();g.arc(p.x*k,p.y*k,1.3*k,0,7);g.fill();}
+  g.globalAlpha=1;
 }
 function wireCanvas(){
   const cv=document.getElementById('cv');if(!cv)return;
@@ -117,13 +116,13 @@ function checkTrace(){
 addEventListener('resize',()=>{if(state.mode==='draw')fitBoard();});
 
 /* ---------- drawing menu ---------- */
-const DRAW_GAMES=[['brush','🎨','Волшебная кисть','Рисуем что хотим, линия поёт'],['stamps','⭐','Штампы','Нажимаешь, и появляется картинка'],['roads','🚗','Дорожки','Ведём машинку по дороге к домику'],['draw','✏️','Обводи по точкам','Ведём пальчиком по пунктиру'],['scratch','🫧','Сотри и найди','Стираем туман: кто там спрятался?'],['paint','🖍️','Раскраска','Выбираем краску и нажимаем на картинку']];
+const DRAW_GAMES=[['brush','🎨','Волшебная кисть','Рисуем что хотим, линия поёт'],['stamps','🎂','Укрась','Украшаем торт, сажаем цветы, наряжаем ёлку'],['roads','🚗','Дорожки','Ведём по дороге и собираем по пути'],['draw','✏️','Обводи по точкам','Ведём пальчиком по пунктиру'],['scratch','🫧','Сотри и найди','Стираем туман: кто там спрятался?'],['paint','🖍️','Раскраска','Выбираем краску и нажимаем на картинку']];
 function drawMenuHTML(){
   return `<section class="home">
     <header class="bar"><button class="back" data-act="home">← Назад</button><div class="title">Рисуем пальцем</div></header>
     <div class="lvls">${DRAW_GAMES.map(([a,i,t,ex])=>`<button class="lvl" data-act="${a}"><span class="li">${em(i)}</span><b>${t}</b><small>${ex}</small></button>`).join('')}</div>
     <div class="grown">
-      <p class="tip">Линия, которая уходит от точек, получается бледной, а обведённые точки становятся зелёными. Если ребёнок просто водит по всему экрану, картинка не засчитается: игра скажет «Давай по точкам» и покажет рукой, как надо. Точность меняется сама (уровни «Обводи по точкам» и «Дорожки» на экране «Уровни»).</p>
+      <p class="tip">Линия, которая уходит от точек, получается бледной. Если ребёнок просто водит по всему экрану, картинка не засчитается: игра скажет «Давай по точкам» и покажет рукой, как надо. Точность меняется сама (уровни «Обводи по точкам» и «Дорожки» на экране «Уровни»).</p>
     </div>
   </section>`;
 }
@@ -137,8 +136,8 @@ let sc=null,swish=null;
 function startScratch(){state.mode='scratch';sc={timer:null,item:null};nextScratch();}
 function nextScratch(){
   clearTimeout(sc.timer);
-  const pool=[...CATS.animals.items,...CATS.cars.items,...CATS.food.items,...CATS.family.items].filter(x=>x!==sc.item);
-  sc.item=pool[Math.floor(Math.random()*pool.length)];sc.done=false;sc.cells=new Set();
+  const pool=[...CATS.animals.items,...CATS.cars.items,...CATS.food.items,...CATS.toys.items,...CATS.family.items];
+  sc.item=pool[bagNext('scratch'+pool.length,pool.length)];sc.done=false;sc.cells=new Set();
   render();setTimeout(()=>{if(state.mode==='scratch')say('Сотри пальчиком! Кто там?');},300);
 }
 function scratchHTML(){
@@ -251,56 +250,123 @@ function startBrushTone(y){
 function brushToneTo(y){if(btone&&ac)btone.o.frequency.setTargetAtTime(660-y*400,ac.currentTime,.06);}
 function stopBrushTone(){if(!btone||!ac)return;const {o,g}=btone;btone=null;g.gain.setTargetAtTime(.0001,ac.currentTime,.08);setTimeout(()=>{try{o.stop();}catch(e){}},500);}
 
-/* ---------- stamps ---------- */
-const STAMPS=[['⭐','Звёздочка'],['🌸','Цветочек'],['🐞','Божья коровка'],['🍓','Клубничка'],['🐟','Рыбка'],['🎈','Шарик'],['🐥','Цыплёнок']];
+/* ---------- decorate: put things on their places (cake, meadow, Christmas tree) ---------- */
+const DECOR=[
+  {name:'Торт',say:'Укрась торт!',done:'Какой красивый торт!',bg:'cake',
+   phases:[{stamps:[['🍓','Клубничка'],['🌸','Цветочек'],['⭐','Звёздочка']],spots:[[34,37],[50,34],[66,37],[24,63],[41,67],[59,67],[76,63]]}]},
+  {name:'Полянка',say:'Посади цветы на полянке!',done:'Какая красивая полянка!',bg:'meadow',
+   phases:[{stamps:[['🌸','Цветочек'],['🌼','Ромашка']],spots:[[16,70],[34,83],[52,68],[70,82],[86,68]]},
+           {say:'А теперь прилетели пчёлки и божьи коровки!',stamps:[['🐝','Пчёлка'],['🐞','Божья коровка']],spots:'above'}]},
+  {name:'Ёлка',say:'Наряди ёлку!',done:'Какая нарядная ёлка!',bg:'tree',
+   phases:[{stamps:[['ball-red','Красный шарик'],['ball-blue','Синий шарик'],['ball-yellow','Жёлтый шарик']],
+            spots:[[50,30],[42,49],[58,49],[32,67],[50,64],[68,67],[24,81],[42,80],[58,80],[76,81]]},
+           {say:'А на макушку — звёздочку!',stamps:[['⭐','Звёздочка']],spots:[[50,11]]}]}
+];
+const BALLS={'ball-red':'#E5484D','ball-blue':'#3E63DD','ball-yellow':'#F5B000'};
 let stp=null;
-function startStamps(){state.mode='stamps';stp={i:0,items:[]};render();say('Нажимай пальчиком!');}
-function stampEl(it){return `<span class="stamp" style="left:${it.x}%;top:${it.y}%;font-size:calc(var(--b)*${it.s});rotate:${it.r}deg"><span>${em(STAMPS[it.i][0])}</span></span>`;}
-function stampsHTML(){
-  return `<header class="bar">${holdBack()}<div class="title">Штампы</div><button class="ctl" data-act="stampclear" aria-label="Стереть">${em('🧽')}</button></header>
-  <main class="stage" id="stage"><div class="board" id="board">${stp.items.map(stampEl).join('')}</div></main>
-  <div class="stbar">${STAMPS.map(([e,n],i)=>`<button class="stb ${stp.i===i?'on':''}" data-st="${i}" aria-label="${n}">${em(e)}</button>`).join('')}</div>`;
+function startStamps(){state.mode='stamps';stp={scene:-1,timer:null};nextDecor();}
+function nextDecor(){
+  clearTimeout(stp.timer);stp.scene=(stp.scene+1)%DECOR.length;stp.phase=0;stp.placed=[];stp.sel=0;stp.done=false;
+  render();setTimeout(()=>{if(state.mode==='stamps')say(DECOR[stp.scene].say);},300);
 }
+function decorSpots(){
+  const P=DECOR[stp.scene].phases[stp.phase];
+  if(P.spots==='above')return stp.placed.filter(p=>p.phase===0).map(p=>[p.x+5,p.y-12]);
+  return P.spots;
+}
+function stampHTML(key){return BALLS[key]?`<span class="dball" style="--bc:${BALLS[key]}"></span>`:em(key);}
+function decorBG(bg){
+  if(bg==='cake')return `<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#FFF4E6"/>
+    <ellipse cx="50" cy="88" rx="42" ry="6" fill="#fff" stroke="#E5DCCF"/>
+    <rect x="14" y="52" width="72" height="34" rx="7" fill="#F7B3C8"/><path d="M14 58q4 7 9 0t9 0 9 0 9 0 9 0 9 0 9 0 9 0V52H14z" fill="#fff"/>
+    <rect x="24" y="28" width="52" height="26" rx="6" fill="#FFDCE7"/><path d="M24 33q4 6 8.7 0t8.7 0 8.7 0 8.7 0 8.7 0 8.7 0V28H24z" fill="#fff"/></svg>`;
+  if(bg==='meadow')return `<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="58" fill="#BFE3FF"/><circle cx="84" cy="16" r="9" fill="#FFE07A"/>
+    <path d="M0 58Q30 50 60 57T100 55V100H0Z" fill="#9ED98A"/><path d="M0 70Q40 64 100 70V100H0Z" fill="#8ACF76"/></svg>`;
+  return `<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#EAF4FF"/>
+    <rect x="44" y="86" width="12" height="10" rx="2" fill="#9C6A3F"/>
+    <path d="M50 44L10 88H90Z" fill="#2E8B57"/><path d="M50 24L18 62H82Z" fill="#35A064"/><path d="M50 8L28 40H72Z" fill="#3FB370"/></svg>`;
+}
+function stampsHTML(){
+  const D=DECOR[stp.scene],P=D.phases[stp.phase],spots=decorSpots();
+  const filled=new Set(stp.placed.filter(p=>p.phase===stp.phase).map(p=>p.s));
+  return `<header class="bar">${holdBack()}<div class="title">${D.name}</div>
+    <button class="ctl" data-act="stampclear" aria-label="Начать заново">${em('🧽')}</button><button class="ctl" data-act="nextdecor" aria-label="Другая картинка">${em('➡️')}</button></header>
+  <main class="stage" id="stage"><div class="board decor" id="board">${decorBG(D.bg)}
+    ${stp.done?'':spots.map((p,i)=>filled.has(i)?'':`<span class="dspot" style="left:${p[0]}%;top:${p[1]}%"></span>`).join('')}
+    ${stp.placed.map(p=>`<span class="dplaced" style="left:${p.x}%;top:${p.y}%"><span>${stampHTML(p.k)}</span></span>`).join('')}
+  </div></main>
+  <div class="stbar">${stp.done?'':P.stamps.map(([k,n],i)=>`<button class="stb ${stp.sel===i?'on':''}" data-st="${i}" aria-label="${n}">${stampHTML(k)}</button>`).join('')}</div>`;
+}
+function pickStamp(i){stp.sel=i;document.querySelectorAll('.stb').forEach((x,k)=>x.classList.toggle('on',k===i));say(DECOR[stp.scene].phases[stp.phase].stamps[i][1]+'!');}
 function wireStamps(){
   const b=document.getElementById('board');if(!b)return;
   b.addEventListener('pointerdown',e=>{
-    e.preventDefault();const r=b.getBoundingClientRect();
-    const it={i:stp.i,x:(e.clientX-r.left)/r.width*100,y:(e.clientY-r.top)/r.height*100,s:(.1+Math.random()*.05).toFixed(3),r:Math.round(Math.random()*30-15)};
-    stp.items.push(it);b.insertAdjacentHTML('beforeend',stampEl(it));
-    if(stp.items.length>60){stp.items.shift();b.querySelector('.stamp').remove();}
-    bloopAt(440+Math.random()*440);
+    if(stp.done)return;e.preventDefault();const r=b.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*100,y=(e.clientY-r.top)/r.height*100;
+    const spots=decorSpots(),filled=new Set(stp.placed.filter(p=>p.phase===stp.phase).map(p=>p.s));
+    let best=-1,bd=17;spots.forEach((p,i)=>{if(filled.has(i))return;const d=Math.hypot(p[0]-x,p[1]-y);if(d<bd){bd=d;best=i;}});
+    if(best<0)return;
+    const P=DECOR[stp.scene].phases[stp.phase],sp=spots[best];
+    stp.placed.push({phase:stp.phase,s:best,x:sp[0],y:sp[1],k:P.stamps[Math.min(stp.sel,P.stamps.length-1)][0]});
+    bloopAt(500+Math.random()*400);
+    if(filled.size+1>=spots.length){
+      const D=DECOR[stp.scene];
+      if(stp.phase+1<D.phases.length){stp.phase++;stp.sel=0;render();const txt=D.phases[stp.phase].say,scn=stp.scene;setTimeout(()=>{if(state.mode==='stamps'&&stp.scene===scn)say(txt);},500);}
+      else{stp.done=true;render();const bd_=document.getElementById('board');if(bd_)anim(bd_,'pop');softChime();setTimeout(()=>say(D.done),600);
+        stp.timer=setTimeout(()=>{if(state.mode==='stamps')nextDecor();},7000);}
+    }else render();
   });
 }
 function bloopAt(f){const c=AC();if(!c)return;const t=c.currentTime+.01,o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*1.6,t+.1);
   g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18*vol(),t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.22);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+.25);}
 
-/* ---------- roads: drive to the goal ---------- */
-const ROADS=[
-  {from:'🚗',to:'🏠',say:'Отвези машинку домой!',pts:wavePts(14,86,50,8,1)},
-  {from:'🐰',to:'🥕',say:'Помоги зайчику найти морковку!',pts:wavePts(14,86,50,20,1.5)},
-  {from:'🐶',to:'⚽',say:'Помоги собачке найти мячик!',pts:[[18,18],[18,78],[84,78]]},
-  {from:'🚂',to:'🏠',say:'Отвези поезд домой!',pts:[[12,24],[52,24],[52,76],[88,76]]},
-  {from:'🐱',to:'🥛',say:'Помоги котику найти молоко!',pts:[[16,80],[16,22],[50,22],[50,62],[84,62],[84,24]]}
-];
+/* ---------- roads: a new winding road every time, many pairs, things to collect on the way ---------- */
+const ROAD_PAIRS=[['🚗','🏠','Отвези машинку домой!'],['🐇','🥕','Помоги кролику найти морковку!'],['🐶','⚽','Помоги собачке найти мячик!'],
+  ['🚂','🏠','Отвези поезд домой!'],['🐱','🥛','Помоги котику найти молоко!'],['🐝','🌸','Помоги пчёлке долететь до цветка!'],
+  ['🦆','nature-voda','Помоги утке добраться до воды!'],['🧸','toy-kukla','Помоги мишке дойти до куклы!'],['🐞','🍂','Помоги божьей коровке доползти до листика!'],
+  ['🐴','🍎','Помоги лошадке найти яблоко!'],['✈️','☁️','Помоги самолёту долететь до облака!'],['🚒','🏠','Отвези пожарную машину домой!'],
+  ['🐔','🌿','Помоги курочке дойти до травки!'],['🚜','🥔','Отвези трактор к картошке!']];
+/* things to pick up: [picture, accusative 1, 2–4, 5+, gender] */
+const COLLECT=[['⭐','звёздочку','звёздочки','звёздочек','f'],['🍎','яблоко','яблока','яблок','n'],['🍓','клубничку','клубнички','клубничек','f']];
+function makeRoad(L){
+  const horiz=Math.random()<.65,n=[1,2,3][L-1]+(Math.random()<.5?0:1)+2,amp=[10,18,24][L-1],ctrl=[];
+  for(let i=0;i<n;i++){
+    const a=14+i/(n-1)*72;let b=(i===0||i===n-1)?50+(Math.random()-.5)*30:50+(i%2?1:-1)*(Math.random()<.5?1:-1)*amp*(.6+Math.random()*.6);
+    b=Math.max(16,Math.min(84,b));ctrl.push(horiz?[a,b]:[b,100-a]);
+  }
+  const pts=[];
+  for(let i=0;i<ctrl.length-1;i++){
+    const p0=ctrl[Math.max(0,i-1)],p1=ctrl[i],p2=ctrl[i+1],p3=ctrl[Math.min(ctrl.length-1,i+2)];
+    for(let s=0;s<12;s++){const t=s/12,t2=t*t,t3=t2*t;
+      pts.push([0,1].map(k=>.5*((2*p1[k])+(-p0[k]+p2[k])*t+(2*p0[k]-5*p1[k]+4*p2[k]-p3[k])*t2+(-p0[k]+3*p1[k]-3*p2[k]+p3[k])*t3)));}
+  }
+  pts.push(ctrl[ctrl.length-1]);
+  return pts.map(p=>[Math.max(9,Math.min(91,p[0])),Math.max(9,Math.min(91,p[1]))]);
+}
 let rd=null;
-function startRoads(){state.mode='roads';rd={i:-1,timer:null};nextRoad();}
+function startRoads(){state.mode='roads';rd={timer:null};nextRoad();}
 function nextRoad(){
-  clearTimeout(rd.timer);rd.i=(rd.i+1)%ROADS.length;const R=ROADS[rd.i];
-  rd.P=resample(R.pts,1).map(q=>[q.x,q.y]);rd.idx=0;rd.drag=false;rd.done=false;
-  render();setTimeout(()=>{if(state.mode==='roads')say(R.say);},300);
+  clearTimeout(rd.timer);const L=lv('roads');
+  rd.pair=ROAD_PAIRS[bagNext('roads',ROAD_PAIRS.length)];
+  rd.P=resample(makeRoad(L),1).map(q=>[q.x,q.y]);rd.idx=0;rd.drag=false;rd.done=false;
+  const nc=L===1?0:L===2?2+Math.floor(Math.random()*2):3+Math.floor(Math.random()*2);
+  rd.ci=COLLECT[Math.floor(Math.random()*COLLECT.length)];rd.got=0;
+  rd.coll=Array.from({length:nc},(_,i)=>({idx:Math.round(rd.P.length*(.22+i*(.6/Math.max(1,nc-1||1)))),taken:false}));
+  if(nc===1)rd.coll[0].idx=Math.round(rd.P.length*.5);
+  render();setTimeout(()=>{if(state.mode==='roads')say(rd.pair[2]);},300);
 }
 function svgImg(e,x,y,sz){const u=IMG[e.replace(/\uFE0F/g,'')];return u?`<image href="${u}" x="${x-sz/2}" y="${y-sz/2}" width="${sz}" height="${sz}"/>`:'';}
 function roadsHTML(){
-  const R=ROADS[rd.i],pts=rd.P.map(q=>q.join(',')).join(' '),end=rd.P[rd.P.length-1];
+  const pts=rd.P.map(q=>q.join(',')).join(' '),end=rd.P[rd.P.length-1],w=[15,11,8][lv('roads')-1];
   return `<header class="bar">${holdBack()}<div class="title">Дорожки</div><button class="ctl" data-act="nextroad" aria-label="Другая дорожка">${em('➡️')}</button></header>
   <main class="stage" id="stage"><div class="board roadboard" id="board">
     <svg viewBox="0 0 100 100" aria-hidden="true">
-      <polyline points="${pts}" fill="none" stroke="#CFD6E4" stroke-width="${[15,11,8][lv('roads')-1]}" stroke-linecap="round" stroke-linejoin="round"/>
-      <polyline id="donepath" points="" fill="none" stroke="#8FD6A5" stroke-width="${[15,11,8][lv('roads')-1]}" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="${pts}" fill="none" stroke="#CFD6E4" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline id="donepath" points="" fill="none" stroke="#8FD6A5" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>
       <polyline points="${pts}" fill="none" stroke="#fff" stroke-width="1.2" stroke-dasharray="3 3"/>
-      ${svgImg(R.to,end[0],end[1],17)}
+      ${svgImg(rd.pair[1],end[0],end[1],17)}
     </svg>
-    <div class="token hint" id="token"><span>${em(R.from)}</span></div>
+    ${rd.coll.map((c,i)=>{const p=rd.P[Math.min(c.idx,rd.P.length-1)];return `<div class="rcoll${c.taken?' got':''}" id="rc${i}" style="left:${p[0]}%;top:${p[1]}%">${em(rd.ci[0])}</div>`;}).join('')}
+    <div class="token hint" id="token"><span>${em(rd.pair[0])}</span></div>
   </div></main>`;
 }
 function placeToken(){
@@ -321,14 +387,18 @@ function wireRoads(){
 function roadMove(p){
   let best=-1,bd=1e9;
   for(let j=Math.max(0,rd.idx-12);j<=Math.min(rd.P.length-1,rd.idx+12);j++){const d=Math.hypot(p[0]-rd.P[j][0],p[1]-rd.P[j][1]);if(d<bd){bd=d;best=j;}}
-  if(bd>[13,9.5,7][lv('roads')-1])return; /* finger left the road: the car waits */
+  if(bd>[13,9.5,7][lv('roads')-1])return; /* finger left the road: it waits */
   rd.idx=best;placeToken();
+  rd.coll.forEach((c,i)=>{if(!c.taken&&c.idx<=rd.idx){c.taken=true;rd.got++;const el=document.getElementById('rc'+i);if(el)el.classList.add('got');bloopAt(520+rd.got*90);say(cap(NUM[rd.got])+'!');}});
   if(rd.idx>=rd.P.length-2)roadDone();
 }
 function roadDone(){
   rd.done=true;rd.drag=false;
   const t=document.querySelector('#token>span');if(t)anim(t,'yay');
   if(state.calm)softChime();
-  setTimeout(()=>{speakSeq(['Приехали!','Молодец!']);lvResult('roads',true);},state.calm?600:0);
-  rd.timer=setTimeout(()=>{if(state.mode==='roads')nextRoad();},4500);
+  const C=rd.ci,parts=['Добрались!'];
+  if(rd.got)parts.push(`Собрали ${numAcc(rd.got,C[4])} ${formN(rd.got,[0,C[1],C[2],C[3]])}!`);
+  parts.push('Молодец!');
+  setTimeout(()=>{speakSeq(parts);lvResult('roads',true);},state.calm?600:0);
+  rd.timer=afterSpeech(()=>{if(state.mode==='roads')nextRoad();},2200);
 }

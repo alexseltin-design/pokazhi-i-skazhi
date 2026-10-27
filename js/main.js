@@ -8,7 +8,7 @@ app.addEventListener('click',e=>{
   if(d.ans!==undefined){ansTap(b,+d.ans);return;}
   if(d.cat){if(state.recKey)return;state.homeMsg=null;state.cat=d.cat;state.last=null;render();return;}
   if(d.bc!==undefined){bs.color=+d.bc;document.querySelectorAll('.pc').forEach(x=>x.classList.toggle('on',x.dataset.bc===d.bc));say(+d.bc<0?'Радуга!':cap(PAINTS[+d.bc].n)+'!');return;}
-  if(d.st!==undefined){stp.i=+d.st;document.querySelectorAll('.stb').forEach(x=>x.classList.toggle('on',x.dataset.st===d.st));say(STAMPS[+d.st][1]+'!');return;}
+  if(d.st!==undefined){pickStamp(+d.st);return;}
   if(d.lv){const [g,n]=d.lv.split(':');state.levels[g]=+n;lvReset(g);render();return;}
   if(d.dsaid!==undefined){const e=DICT[d.dsaid];if(e){e.said=e.said?null:Date.now();e.last=Date.now();dictSave();render();}return;}
   if(d.ddel!==undefined){delete DICT[d.ddel];dictSave();render();return;}
@@ -30,6 +30,10 @@ app.addEventListener('click',e=>{
   if(a==='talkmenu'){state.mode='talkmenu';render();return;}
   if(a==='dandelion')return startDand();
   if(a==='newdand'){nextScene();return;}
+  if(a==='sync'){state.mode='sync';render();return;}
+  if(a==='syncnew'){syncConnect(syncNewCode(),true);return;}
+  if(a==='syncjoin'){const i=document.getElementById('syncin');syncConnect(i?i.value:'',false);return;}
+  if(a==='syncoff'){syncDisconnect();return;}
   if(a==='levels'){state.levelsFrom=state.mode;state.mode='levels';render();return;}
   if(a==='levelsback'){state.mode=state.levelsFrom||'home';render();return;}
   if(a==='learn')return startLearn();
@@ -52,7 +56,8 @@ app.addEventListener('click',e=>{
   if(a==='brush')return startBrush();
   if(a==='brushclear'){if(bs){bs.segs=[];render();}return;}
   if(a==='stamps')return startStamps();
-  if(a==='stampclear'){if(stp){stp.items=[];render();}return;}
+  if(a==='stampclear'){if(stp){stp.phase=0;stp.placed=[];stp.done=false;clearTimeout(stp.timer);render();}return;}
+  if(a==='nextdecor'){nextDecor();return;}
   if(a==='roads')return startRoads();
   if(a==='nextroad'){if(rd&&!rd.done)lvResult('roads',false);nextRoad();return;}
   if(a==='hear')return startHear();
@@ -117,4 +122,4 @@ document.addEventListener('gesturestart',e=>e.preventDefault());
 loadSettings();
 render();
 if(synth){loadVoices();synth.onvoiceschanged=loadVoices;}
-loadRecs().then(loadFamily);
+loadRecs().then(loadFamily).then(syncStart);

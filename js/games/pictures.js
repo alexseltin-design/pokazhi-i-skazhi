@@ -14,18 +14,18 @@ function newRound(){
   const L=lv('find');let t,opts;
   if(L<=4){
     const items=L===4?mixedPool():cat().items,n=Math.min([2,3,4,3][L-1],items.length);
-    const pool=items.filter(it=>it!==state.last);t=pool[Math.floor(Math.random()*pool.length)];
+    t=items[bagNext('find'+L+(L===4?'':state.cat),items.length)];
     const used=new Set([t.e,t.w]),rest=[];for(const it of shuffle(items)){if(rest.length>=n-1)break;if(used.has(it.e)||used.has(it.w))continue;used.add(it.e);used.add(it.w);rest.push(it);}
     opts=shuffle([t,...rest]);
   }else if(L===5){
-    const T=LEARN[Math.floor(Math.random()*LEARN.length)],others=shuffle(LEARN.filter(x=>x.v!==T.v)).slice(0,2);
+    const T=LEARN[bagNext('find5',LEARN.length)],others=shuffle(LEARN.filter(x=>x.v!==T.v)).slice(0,2);
     const mk=(x,i)=>({e:x.e,w:x.n,c:COLORS[(i*3+1)%COLORS.length],q:`Кто ${x.v}?`,ans:`${x.n} ${x.v}!`});
     opts=shuffle([T,...others]).map(mk);t=opts.find(o=>o.w===T.n);
   }else if(L===6){
-    const T=FUNCQ[Math.floor(Math.random()*FUNCQ.length)],others=shuffle(FUNCQ.filter(x=>x!==T)).slice(0,2);
+    const T=FUNCQ[bagNext('find6',FUNCQ.length)],others=shuffle(FUNCQ.filter(x=>x!==T)).slice(0,2);
     opts=shuffle([T,...others]).map((x,i)=>({e:x.e,w:x.w,c:COLORS[(i*3+2)%COLORS.length],q:T.q,ans:x.a}));t=opts.find(o=>o.w===T.w);
   }else{
-    const [e,w,g]=SIZES[Math.floor(Math.random()*SIZES.length)],big=Math.random()<.5,A=ADJ[g],col=COLORS[Math.floor(Math.random()*COLORS.length)];
+    const [e,w,g]=SIZES[bagNext('find7',SIZES.length)],big=Math.random()<.5,A=ADJ[g],col=COLORS[Math.floor(Math.random()*COLORS.length)];
     const q=`Где ${big?A[0]:A[1]} ${w}?`;
     const B={e,w:`${A[0]} ${w}`,c:col,sc:1.3,hide:1,q,ans:`${cap(A[0])} ${w}!`,wrongSay:`Это ${A[0]} ${w}.`};
     const S={e,w:`${A[1]} ${w}`,c:col,sc:.6,hide:1,q,ans:`${cap(A[1])} ${w}!`,wrongSay:`Это ${A[1]} ${w}.`};

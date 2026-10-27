@@ -24,7 +24,7 @@ function homeHTML(){
     <div class="grown">
       <h2>Для взрослого: семья и свой голос</h2>
       <p class="tip">Добавьте фото близких: появится раздел «Семья» во всех играх. А ещё можно записать своим голосом слова и фразы игры («Молодец!», числа, цвета), и игра будет говорить им вместо компьютерного.${nRec?` Записано: ${nRec}.`:''}</p>
-      <div class="cats"><button class="big-rec" data-act="family" style="background:#CAFFBF">👪 Фото семьи${CATS.family.items.length?` (${CATS.family.items.length})`:''}</button><button class="big-rec" data-act="levels" style="background:#FFE08A">📈 Уровни</button><button class="big-rec" data-act="record">${em('🎙')} Записать свой голос</button></div>
+      <div class="cats"><button class="big-rec" data-act="family" style="background:#CAFFBF">👪 Фото семьи${CATS.family.items.length?` (${CATS.family.items.length})`:''}</button><button class="big-rec" data-act="levels" style="background:#FFE08A">📈 Уровни</button><button class="big-rec" data-act="sync" style="background:#BFE3FF">🔄 Голос на всех устройствах</button><button class="big-rec" data-act="record">${em('🎙')} Записать свой голос</button></div>
     </div>
     <div class="grown">
       <h2>Для взрослого: настройки</h2>
@@ -130,7 +130,7 @@ function render(){
   const keepScroll=render._last===v?[...app.querySelectorAll('.recwrap,.home')].map(el=>el.scrollTop):null;
   render._last=v;
   setTimeout(()=>{if(keepScroll)app.querySelectorAll('.recwrap,.home').forEach((el,i)=>{if(keepScroll[i]!==undefined)el.scrollTop=keepScroll[i];});},0);
-  app.innerHTML=v==='home'?homeHTML():v==='listen'?listenHTML():v==='find'?findHTML():v==='draw'?drawHTML():v==='rhythm'?rhythmHTML():v==='count'?countHTML():v==='jump'?jumpHTML():v==='jumpmenu'?jumpMenuHTML():v==='talkmenu'?talkMenuHTML():v==='levels'?levelsHTML():v==='dandelion'?dandHTML():v==='learn'?learnHTML():v==='dict'?dictHTML():v==='blow'?blowHTML():v==='parrot'?parrotHTML():v==='finish'?finishHTML():v==='choose'?chooseHTML():v==='brush'?brushHTML():v==='stamps'?stampsHTML():v==='roads'?roadsHTML():v==='hear'?hearHTML():v==='copy'?copyHTML():v==='breathe'?breatheHTML():v==='drawmenu'?drawMenuHTML():v==='scratch'?scratchHTML():v==='paint'?paintHTML():v==='family'?familyHTML():recordHTML();
+  app.innerHTML=v==='home'?homeHTML():v==='listen'?listenHTML():v==='find'?findHTML():v==='draw'?drawHTML():v==='rhythm'?rhythmHTML():v==='count'?countHTML():v==='jump'?jumpHTML():v==='jumpmenu'?jumpMenuHTML():v==='talkmenu'?talkMenuHTML():v==='sync'?syncHTML():v==='levels'?levelsHTML():v==='dandelion'?dandHTML():v==='learn'?learnHTML():v==='dict'?dictHTML():v==='blow'?blowHTML():v==='parrot'?parrotHTML():v==='finish'?finishHTML():v==='choose'?chooseHTML():v==='brush'?brushHTML():v==='stamps'?stampsHTML():v==='roads'?roadsHTML():v==='hear'?hearHTML():v==='copy'?copyHTML():v==='breathe'?breatheHTML():v==='drawmenu'?drawMenuHTML():v==='scratch'?scratchHTML():v==='paint'?paintHTML():v==='family'?familyHTML():recordHTML();
   if(v==='listen'||v==='find'){wireBack();fitGrid();if(v==='listen')wireSwipe();}
   if(v==='draw'){wireBack();fitBoard();wireCanvas();}
   if(v==='rhythm'){wireBack();wireDrum();updRh(0);}

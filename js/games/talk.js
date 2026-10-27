@@ -107,22 +107,40 @@ function playParrot(a,b){
 
 /* ---------- finish the word ---------- */
 /* level 1: animal and vehicle sounds  [picture, prompt, spoken sound, sound effect] */
-const FINISH=[['🐮','Корова говорит…','Му, му!'],['🐱','Кошка говорит…','Мяу, мяу!'],['🐶','Собака говорит…','Гав, гав!'],['🦆','Утка говорит…','Кря, кря!'],
-  ['🐷','Свинка говорит…','Хрю, хрю!'],['🐸','Лягушка говорит…','Ква, ква!'],['🐑','Овечка говорит…','Бе, бе!'],['🚗','Машина гудит…',null,'car'],['🚂','Поезд едет…',null,'train']];
-/* level 2: finish the word  [picture, start, ending, whole word] */
-const FINISH2=[['🐱','Кто это?','Кошка','Кошка'],['🐶','Кто это?','Собака','Собака'],['🐮','Кто это?','Корова','Корова'],['🦆','Кто это?','Утка','Утка'],
-  ['🐸','Кто это?','Лягушка','Лягушка'],['🐷','Кто это?','Свинка','Свинка'],['🚗','Что это?','Машина','Машина'],['⚽','Что это?','Мяч','Мяч'],
-  ['🍎','Что это?','Яблоко','Яблоко'],['🍌','Что это?','Банан','Банан'],['🧸','Кто это?','Мишка','Мишка'],['🎈','Что это?','Шарик','Шарик']];
-/* level 3: familiar phrases and folk rhymes  [picture, start, missing word, whole phrase] */
+/* level 1: animal and vehicle sounds  [picture, prompt, spoken sound, sound effect] */
+const FINISH=[['🐶','Собака говорит…','Гав, гав!'],['🐱','Кошка говорит…','Мяу, мяу!'],['🐮','Корова говорит…','Му, му!'],['🐘','Слон трубит…',null,'elephant'],
+  ['🦁','Лев рычит…',null,'roar'],['🐸','Лягушка говорит…','Ква, ква!'],['🐷','Свинка говорит…','Хрю, хрю!'],['🐑','Овечка говорит…','Бе, бе!'],
+  ['🐴','Лошадка говорит…','Игого!'],['🦆','Утка говорит…','Кря, кря!'],['🐔','Курочка говорит…','Ко, ко, ко!'],
+  ['🚗','Машина гудит…',null,'car'],['🚌','Автобус гудит…',null,'bus'],['🚒','Пожарная машина едет…',null,'siren'],['✈️','Самолёт летит…',null,'plane'],
+  ['🚂','Поезд едет…',null,'train'],['🚢','Корабль гудит…',null,'ship'],['🚜','Трактор едет…',null,'tractor'],['🚚','Грузовик гудит…',null,'truck'],
+  ['🚲','Велосипед звенит…',null,'bell'],['🚁','Вертолёт летит…',null,'heli'],['🛴','Самокат едет…',null,'scooter'],['🚕','Такси гудит…',null,'taxi']];
+const FXHINT={};Object.values(CATS).forEach(c=>c.items.forEach(i=>{if(i.fx&&i.hint)FXHINT[i.fx]=i.hint;}));
+/* level 2: name the picture — every picture from every theme  [picture, prompt, word, word] */
+const LIVING=['Божья коровка','Пчела','Кукла','Зайчик','Мишка'];
+const FINISH2=Object.entries(CATS).filter(([k,c])=>!c.hidden&&k!=='family')
+  .flatMap(([k,c])=>c.items.map(i=>[i.e,(k==='animals'||LIVING.includes(i.w))?'Кто это?':'Что это?',i.w,i.w]));
+/* level 3: familiar phrases, folk nursery rhymes and counting rhymes  [picture, start, missing word, whole phrase] */
 const FINISH3=[['🔢','Раз, два…','три','Раз, два, три!'],['👏','Ладушки, ладушки! Где были?','У бабушки','Ладушки, ладушки! Где были? У бабушки!'],
   ['🌙','Спокойной…','ночи','Спокойной ночи!'],['☀️','Доброе…','утро','Доброе утро!'],['👋','Пока-…','пока','Пока-пока!'],
-  ['🍽️','Приятного…','аппетита','Приятного аппетита!'],['🎉','С днём…','рождения','С днём рождения!'],['🐻','Мишка косолапый по лесу…','идёт','Мишка косолапый по лесу идёт!']];
+  ['🍽️','Приятного…','аппетита','Приятного аппетита!'],['🎉','С днём…','рождения','С днём рождения!'],['🧸','Мишка косолапый по лесу…','идёт','Мишка косолапый по лесу идёт!'],
+  ['🐇','Раз, два, три, четыре, пять, вышел зайчик…','погулять','Раз, два, три, четыре, пять, вышел зайчик погулять!'],
+  ['🥣','Сорока-белобока кашу…','варила','Сорока-белобока кашу варила!'],
+  ['🐔','Курочка-рябушечка, куда пошла? На…','речку','Курочка-рябушечка, куда пошла? На речку!'],
+  ['😴','Баю-баюшки-баю, не ложися на…','краю','Баю-баюшки-баю, не ложися на краю!'],
+  ['☀️','Солнышко-вёдрышко, выгляни в…','окошко','Солнышко-вёдрышко, выгляни в окошко!'],
+  ['🌈','Радуга-дуга, не давай…','дождя','Радуга-дуга, не давай дождя!'],
+  ['🐞','Божья коровка, улети на…','небо','Божья коровка, улети на небо!'],
+  ['✋','Пальчик-мальчик, где ты был? С этим братцем в лес…','ходил','Пальчик-мальчик, где ты был? С этим братцем в лес ходил!'],
+  ['🐱','Киска, киска, киска, брысь! На дорожку не…','садись','Киска, киска, киска, брысь! На дорожку не садись!'],
+  ['👏','Ладушки, ладушки! Что ели?','Кашку','Ладушки, ладушки! Что ели? Кашку!'],
+  ['🛁','Мой…','ручки','Мой ручки!'],['😴','Пора…','спать','Пора спать!'],['🧸','Ты мой…','мишка','Ты мой мишка!'],
+  ['🐶','Собачка лает: гав…','гав','Собачка лает: гав, гав!']];
 let fn=null;
 const finishPool=()=>fn.lvl===1?FINISH:fn.lvl===2?FINISH2:FINISH3;
 const finishItem=()=>finishPool()[fn.i%finishPool().length];
 function startFinish(){state.mode='finish';state.stars=0;fn={last:-1,i:0,busy:false,timer:null,lvl:lv('finish')};newFinish();}
 function newFinish(){
-  clearTimeout(fn.timer);fn.lvl=lv('finish');const n=finishPool().length;let i;do{i=Math.floor(Math.random()*n);}while(i===fn.last&&n>1);
+  clearTimeout(fn.timer);fn.lvl=lv('finish');const n=finishPool().length;const i=bagNext('finish'+fn.lvl,n);
   fn.last=i;fn.i=i;fn.busy=false;render();fn.timer=setTimeout(()=>{if(state.mode==='finish')say(finishItem()[1]);},400);
 }
 /* the full answer, said as a hint or after success */
@@ -143,7 +161,7 @@ function finishOk(){
   if(!fn||fn.busy)return;fn.busy=true;
   const c=document.getElementById('fcard');if(c)anim(c,'pop');finishSound(['Да!']);
   const F=finishItem();
-  dictTry(fn.lvl===1?(F[2]?F[2].split(',')[0]:({car:'Би-би',train:'Чух-чух'})[F[3]])+' ('+F[1].split(' ')[0].toLowerCase()+')':fn.lvl===2?F[3]:F[2],'Договори');
+  dictTry(fn.lvl===1?(F[2]?F[2].split(',')[0]:(FXHINT[F[3]]||''))+' ('+F[1].split(' ')[0].toLowerCase()+')':fn.lvl===2?F[3]:F[2],'Договори');
   lvResult('finish',true);
   state.stars++;document.getElementById('stars').innerHTML=starsHTML();
   fn.timer=afterSpeech(()=>{if(state.mode!=='finish')return;if(state.stars>=5)party(()=>{if(state.mode==='finish'){state.stars=0;newFinish();}});else newFinish();},2500);
